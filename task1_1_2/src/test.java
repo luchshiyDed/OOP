@@ -1,5 +1,4 @@
-package knuttmorrisspratt.pack;
-
+import knuttmorrisspratt.pack.Knuttmorrissprat;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

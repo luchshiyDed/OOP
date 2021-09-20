@@ -6,6 +6,11 @@ import java.io.IOException;
 
 public class Knuttmorrissprat {
 
+    /**
+     *
+     * @param str the string that we search
+     * @return pi-function from str (the length of max prefix of str for each symbol of str)
+     */
     public int[] piFunc(String str) {
         int n=str.length();
         int[] pi=new int[n];
@@ -21,6 +26,12 @@ public class Knuttmorrissprat {
         return pi;
     }
 
+    /**
+     *
+     * @param str a string to find in a file
+     * @param text file were we search the string
+     * @return number of the begining of str in text
+     */
     public int knutt_moris_alg(String str,String text) throws IOException {
         int[] p=piFunc(str);
         int m=str.length();
