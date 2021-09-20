@@ -24,6 +24,12 @@ public class test {
         assert(a[0]==47);
     }
     @Test
+    public void test_full_string() throws IOException {
+        Knuttmorrissprat main = new Knuttmorrissprat();
+        Integer[] a =main.knutt_moris_alg("hello I'm Jon. Hi I am Peter. There is a frog. Frog eats people. !", "test.txt");
+        assert(a[0]==0);
+    }
+    @Test
     public void test_in_the_errorString() throws IOException {
         Knuttmorrissprat main = new Knuttmorrissprat();
         Integer[] a =main.knutt_moris_alg("Hi I am Peterr", "test.txt");
