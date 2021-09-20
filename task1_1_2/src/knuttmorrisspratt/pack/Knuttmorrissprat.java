@@ -45,13 +45,14 @@ public class Knuttmorrissprat {
             char c = (char) sym;
             sym = bufferedReader.read();
             while(j>0 && c != str.charAt(j))
-                j = p[j - 1];
+                j = p[j-1];
             if(c == str.charAt(j))
                 j++;
             if(j == m)
             {
                 out.add (i - j + 1);
-                j=0;
+                j=p[j-1];
+
             }
         }
         Integer[] arr={-1};
