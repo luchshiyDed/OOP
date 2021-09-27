@@ -34,6 +34,8 @@ public class Knuttmorrissprat {
      * @return number of each begining of str in the text
      */
     public Integer[] knutt_moris_alg(String str, String text) throws IOException {
+        if(str.length()==0)
+            return null;
         int[] p=piFunc(str);
         int m=str.length();
         ArrayList<Integer> out = new ArrayList<Integer>();
