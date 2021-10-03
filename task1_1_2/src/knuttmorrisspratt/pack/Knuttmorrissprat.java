@@ -1,12 +1,21 @@
 package knuttmorrisspratt.pack;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.*;
 import java.util.*;
 
+
 public class Knuttmorrissprat {
 
+    public class NoStringFoundExeption extends Exception
+    {
+        public NoStringFoundExeption(String str, String mesage)
+        {
+            super(str + mesage);
+        }
+    }
     /**
      *
      * @param str the string that we search
@@ -33,32 +42,50 @@ public class Knuttmorrissprat {
      * @param text file were we search the string
      * @return number of each begining of str in the text
      */
-    public Integer[] knutt_moris_alg(String str, String text) throws IOException {
-        if(str.length()==0)
-            return null;
-        int[] p=piFunc(str);
-        int m=str.length();
+    public Integer[] knutt_moris_alg(String str, String text) throws IOException, NoStringFoundExeption {
+
+        BufferedReader bufferedReader = null;
+        int [] p=null;
+        int m = str.length();
+        try {
+            bufferedReader = new BufferedReader(new FileReader(text));
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+        if (m==0){
+        NoStringFoundExeption e = new NoStringFoundExeption(str, "The substring is empty");
+        System.out.println(e.getMessage());
+        throw e;
+        }
+        p = piFunc(str);
+
         ArrayList<Integer> out = new ArrayList<Integer>();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(text));
+
         int sym = bufferedReader.read();
-        int j=0;
+        int j = 0;
         int i;
-        for (i=0;sym != -1;i++) {
+        for (i = 0; sym != -1; i++) {
             char c = (char) sym;
             sym = bufferedReader.read();
-            while(j>0 && c != str.charAt(j))
-                j = p[j-1];
-            if(c == str.charAt(j))
+            while (j > 0 && c != str.charAt(j))
+                j = p[j - 1];
+            if (c == str.charAt(j))
                 j++;
-            if(j == m)
-            {
-                out.add (i - j + 1);
-                j=p[j-1];
+            if (j == m) {
+                out.add(i - j + 1);
+                j = p[j - 1];
 
             }
         }
-        Integer[] arr={-1};
-        arr=(out.toArray(arr));
-        return arr[0]==null?null:arr;
+        if(out.isEmpty()) {
+            NoStringFoundExeption e=new NoStringFoundExeption("["+str+"]"," -no such substring in the file");
+            System.out.println(e.getMessage());
+            throw e;
+        }
+        Integer[] arr={};
+        arr = (out.toArray(arr));
+        return arr;
     }
 }
+
