@@ -50,12 +50,12 @@ public class Knuttmorrissprat {
         try {
             bufferedReader = new BufferedReader(new FileReader(text));
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             throw e;
         }
         if (m==0){
         NoStringFoundExeption e = new NoStringFoundExeption(str, "The substring is empty");
-        System.out.println(e.getMessage());
+        System.err.println(e.getMessage());
         throw e;
         }
         p = piFunc(str);
@@ -80,7 +80,7 @@ public class Knuttmorrissprat {
         }
         if(out.isEmpty()) {
             NoStringFoundExeption e=new NoStringFoundExeption("["+str+"]"," -no such substring in the file");
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             throw e;
         }
         Integer[] arr={};
