@@ -29,25 +29,18 @@ public class test {
         assert(a[0]==0);
     }
     @Test
-    public void test_bigger_string() throws IOException, Knuttmorrissprat.NoStringFoundExeption {
-        Knuttmorrissprat main = new Knuttmorrissprat();
-        Knuttmorrissprat.NoStringFoundExeption e = assertThrows(Knuttmorrissprat.NoStringFoundExeption.class, () ->
-        {Integer[] a =main.knutt_moris_alg("hello I'm Jon. Hi I am Peter. There is a frog. Frog eats people. !!", "test.txt");});
-        assertEquals("[hello I'm Jon. Hi I am Peter. There is a frog. Frog eats people. !!] -no such substring in the file",  e.getMessage());
-    }
-    @Test
     public void test_in_the_errorString() throws IOException, Knuttmorrissprat.NoStringFoundExeption {
         Knuttmorrissprat main = new Knuttmorrissprat();
-        Knuttmorrissprat.NoStringFoundExeption e = assertThrows(Knuttmorrissprat.NoStringFoundExeption.class, () ->
-        {Integer[] a =main.knutt_moris_alg("Hi I am Peterr", "test.txt");});
-        assertEquals("[Hi I am Peterr] -no such substring in the file",  e.getMessage());
+        Integer[] a =main.knutt_moris_alg("Hi I am Peterr", "test.txt");
+        Integer[] b={};
+        assertEquals(a,b);
     }
     @Test
     public void test_in_the_emptyFile() throws IOException, Knuttmorrissprat.NoStringFoundExeption {
         Knuttmorrissprat main = new Knuttmorrissprat();
-        Knuttmorrissprat.NoStringFoundExeption e = assertThrows(Knuttmorrissprat.NoStringFoundExeption.class, () ->
-        {Integer[] a =main.knutt_moris_alg("hello", "test1.txt");});
-        assertEquals("[hello] -no such substring in the file",  e.getMessage());
+        Integer[] a =main.knutt_moris_alg("hello", "test1.txt");
+        Integer[] b={};
+        assertEquals(a,b);
     }
     @Test
     public void test_large_file() throws IOException, Knuttmorrissprat.NoStringFoundExeption {

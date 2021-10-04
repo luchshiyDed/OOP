@@ -78,11 +78,6 @@ public class Knuttmorrissprat {
 
             }
         }
-        if(out.isEmpty()) {
-            NoStringFoundExeption e=new NoStringFoundExeption("["+str+"]"," -no such substring in the file");
-            System.err.println(e.getMessage());
-            throw e;
-        }
         Integer[] arr={};
         arr = (out.toArray(arr));
         return arr;
