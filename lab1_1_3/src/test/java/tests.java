@@ -26,6 +26,9 @@ public class tests {
         Object[] c=m.arr;
         Object[] b=new Object[]{1,2, 1, 2};
         assert(c[0]==b[0] && c[1]==b[1] && c[2]==b[2] && c[3]==b[3]);
+        assert(m.count()==4);
+        x= m.pop();
+        assert(x==2&& m.count()==3);
     }
     @Test
     void func_working_String_test() throws Exception{
