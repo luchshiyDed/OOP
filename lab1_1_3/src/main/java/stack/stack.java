@@ -30,9 +30,7 @@ public class stack<T> {
         if (head == len) {
             extArr(len = 2 * len + 1);
         }
-        ;
-        int a = head;
-        arr[a] = v;
+        arr[head] = v;
     }
 
 
@@ -41,8 +39,12 @@ public class stack<T> {
         if (head + n >= len) {
             extArr(len = 2 * len + n);
         }
+        T[] buf=(T[]) new Object[n];
+        for(int i=0;i<n;i++){
+            buf[i]=(T) ar.pop();
+        }
         for (int i = 0; i < n; i++) {
-            this.push((T) ar.pop());
+            this.push(buf[n-i-1]);
         }
     }
 
@@ -52,12 +54,14 @@ public class stack<T> {
             Exception e;
             throw e = new IndexOutOfBoundsException("Stack is empty");
         }
+        if(head-n<0){
+            Exception e;
+            throw e = new IndexOutOfBoundsException("Not enough elements in stack");
+        }
         int a = head - n;
-        if (a < 0) a = -1;
         stack<T> ret = new stack();
         for(int i=0;i<n;i++)
-        {ret.push(this.pop());}
-        head = a;
+        {ret.push(this.arr[a+i+1]);this.pop();}
         return ret;
     }
 
