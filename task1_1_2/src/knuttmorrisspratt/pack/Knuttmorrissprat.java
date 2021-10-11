@@ -57,6 +57,7 @@ public class Knuttmorrissprat {
         throw e;
         }
         p = piFunc(str);
+        Object l[]=new int[5];
 
         ArrayList<Integer> out = new ArrayList<Integer>();
 
