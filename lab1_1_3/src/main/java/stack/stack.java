@@ -4,9 +4,9 @@ import java.util.*;
 
 public class stack<T> {
 
-    int len = 0;
-    int head = -1;
-    public T[] arr = ((T[]) new Object[0]);
+    private int len = 0;
+    private int head = -1;
+    private T[] arr = ((T[]) new Object[0]);
 
 
     void extArr(int ln) {
@@ -36,13 +36,13 @@ public class stack<T> {
     }
 
 
-    public void pushStack(T[] ar) {
-        int n = ar.length;
+    public void pushStack(stack ar) throws Exception {
+        int n = ar.count();
         if (head + n >= len) {
             extArr(len = 2 * len + n);
         }
         for (int i = 0; i < n; i++) {
-            push(ar[i]);
+            this.push((T) ar.pop());
         }
     }
 
@@ -55,9 +55,8 @@ public class stack<T> {
         int a = head - n;
         if (a < 0) a = -1;
         stack<T> ret = new stack();
-        ret.arr = Arrays.copyOfRange(arr, a + 1, head + 1);
-        ret.head = n - 1;
-        ret.len = n;
+        for(int i=0;i<n;i++)
+        {ret.push(this.pop());}
         head = a;
         return ret;
     }
