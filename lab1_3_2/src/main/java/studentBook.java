@@ -100,6 +100,10 @@ public class studentBook {
      * @throws Exception
      */
     public void addGrades(int[] semesterGrades) throws Exception {
+        if (semesterGrades.length!=n){
+            Exception e=new gradeExeption("There must be as much grades as classes");
+            throw e;
+        }
        for(int j=0;j<n;j++){
            if(semesterGrades[j]>5 || semesterGrades[j]<2){
                 Exception e=new gradeExeption(classes[j].nam + "-Has invalid grade. Grade must be between 2 and 5");
