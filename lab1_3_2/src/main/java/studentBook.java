@@ -30,7 +30,6 @@ public class studentBook {
     private int cap = 1;
 
     private int semesterNum = 1;
-    private int semestrStip=0;
 
     private int medGrade = 0;
     private int medGradecnt = 0;
@@ -79,7 +78,7 @@ public class studentBook {
             Exception e = new gradeExeption(classes[j].nam + "-Has invalid grade. Grade must be between 2 and 5");
             throw e;
         }
-        int sem=(semester-1)%3;
+        int sem=(semester-1)%classes[j].lsem;
         if (classes[j].grades[sem] != 0) {
             if (classes[j].grades[sem] < 4 && newgrade > 3) {
                 diplomflag--;
@@ -88,7 +87,7 @@ public class studentBook {
                 diplomflag++;
             }
             medGrade = medGrade - classes[j].grades[sem] + newgrade;
-            if (semester == classes[j].fsem) {
+            if (semester == classes[j].lsem) {
                 diplomGrade = diplomGrade - classes[j].grades[sem] + newgrade;
             }
         } else {
@@ -140,7 +139,7 @@ public class studentBook {
     public boolean stipendia() {
         for (int j = 0; j < n; j++) {
             boolean x = classes[j].lsem >= semesterNum && classes[j].fsem <= semesterNum;
-            if (classes[j].grades[(semesterNum-1)%3] != 5 && x)
+            if (classes[j].grades[(semesterNum-1)%classes[j].lsem] != 5 && x)
                 return false;
         }
         return true;
