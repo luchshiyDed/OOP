@@ -16,44 +16,43 @@ public class Calculator {
                     if (calc.size() < 2)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(calc.pop() + calc.pop());
-                } else if (elements[i].equals("-") && calc.size() >= 2) {
+                } else if (elements[i].equals("-")) {
                     if (calc.size() < 2)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(calc.pop() - calc.pop());
-                } else if (elements[i].equals("*") && calc.size() >= 2) {
+                } else if (elements[i].equals("*")) {
                     if (calc.size() < 2)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(calc.pop() * calc.pop());
-                } else if (elements[i].equals("/") && calc.size() >= 2) {
+                } else if (elements[i].equals("/")) {
                     if (calc.size() < 2)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(calc.pop() / calc.pop());
-                } else if (elements[i].equals("pow") && calc.size() >= 2) {
+                } else if (elements[i].equals("pow")) {
                     if (calc.size() < 2)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(Math.pow(calc.pop(), calc.pop()));
-                } else if (elements[i].equals("sin") && calc.size() >= 1) {
+                } else if (elements[i].equals("sin")) {
                     if (calc.size() < 1)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(Math.sin(calc.pop()));
-                } else if (elements[i].equals("cos") && calc.size() >= 1) {
+                } else if (elements[i].equals("cos")) {
                     if (calc.size() < 1)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(Math.cos(calc.pop()));
-                } else if (elements[i].equals("log") && calc.size() >= 1) {
+                } else if (elements[i].equals("log")) {
                     if (calc.size() < 1)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(Math.log(calc.pop()));
-                } else if (elements[i].equals("sqrt") && calc.size() >= 1) {
+                } else if (elements[i].equals("sqrt")) {
                     if (calc.size() < 1)
                         throw new InputMismatchException("invalid syntax of the expression");
                     calc.push(Math.sqrt(calc.pop()));
                 } else {
-                    throw new UnsupportedOperationException(elements[i] + "- Has invalid format");
+                    throw new UnsupportedOperationException(elements[i] + "- is an invalid operation");
                 }
             }
         }
-
         Double res = calc.pop();
         if (calc.isEmpty())
             return res;

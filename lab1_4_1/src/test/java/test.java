@@ -2,6 +2,10 @@ import Calculator.Calculator;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.util.InputMismatchException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class test {
     @Test
@@ -28,7 +32,12 @@ public class test {
     }
     @Test
     void invalidInputsTest(){
-        String a="bulbul";
         Calculator c= new Calculator();
+        UnsupportedOperationException e1 = assertThrows(UnsupportedOperationException.class, () ->
+        {c.Calctst("bulbul 1");});
+        assertEquals(e1.getMessage(),"bulbul- is an invalid operation");
+        InputMismatchException e2 = assertThrows(InputMismatchException.class, () ->
+        {c.Calctst("+ 1 1 + 1 1");});
+        assertEquals(e2.getMessage(),"invalid syntax of the expression");
     }
 }
