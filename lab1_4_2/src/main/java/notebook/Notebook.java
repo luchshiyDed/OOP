@@ -8,16 +8,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class Notebook {
-    private String df="yyyy-MM-dd kk:mm:ss";
-    private class Note implements Comparable {
+    private String df = "yyyy-MM-dd kk:mm:ss";
+
+    public class Note implements Comparable {
         private String title;
         private String text;
         private Date date;
 
-        Note(String title, String text) {
+        public Note(String title, String text) {
             this.title = title;
             this.text = text;
             this.date = new Date();
@@ -38,19 +38,6 @@ public class Notebook {
             return title;
         }
 
-        public void changeTime(Date time) {
-            this.date = time;
-        }
-
-        public void changeTitle(String title) {
-            this.title = title;
-        }
-
-        public void changeNote(String note) {
-            this.text = note;
-        }
-
-
         @Override
         public int compareTo(Object o) {
             Note a = (Note) o;
@@ -65,7 +52,7 @@ public class Notebook {
         this.name = str;
     }
 
-    private ArrayList<Note> readNotes() {
+    public ArrayList<Note> readNotes() {
         try {
             Reader r = new FileReader(name);
             Note[] notearr = gson.fromJson(r, Note[].class);
@@ -76,24 +63,23 @@ public class Notebook {
         }
     }
 
-    private void writeNotes(List<Note> val) {
+    private void writeNotes(ArrayList<Note> val) {
         try (Writer w = new FileWriter(name)) {
             gson.toJson(val, w);
         } catch (IOException e) {
             System.err.println("Notes weren't saved:" + e.getMessage());
-            ;
         }
     }
 
     public void addNote(String tit, String txt) {
         Note note = new Note(tit, txt);
-        List<Note> book = readNotes();
+        ArrayList<Note> book = readNotes();
         book.add(note);
         writeNotes(book);
     }
 
     public void removeNote(String title) {
-        List<Note> notelist = readNotes();
+        ArrayList<Note> notelist = readNotes();
 
         if (notelist.removeIf(Note -> Note.noteTitle().equals(title)))
             writeNotes(notelist);
@@ -134,28 +120,33 @@ public class Notebook {
         int i = 0;
         int b, e;
 
-        try{
-            for (i = 0; notearr[i].noteDate().compareTo(beg)<=0; i++) ;
-        }catch(IndexOutOfBoundsException a){
-            i=notearr.length;
+        try {
+            for (i = 0; notearr[i].noteDate().compareTo(beg) <= 0; i++) ;
+        } catch (IndexOutOfBoundsException a) {
+            i = notearr.length;
         }
-        b = i; if (i== notearr.length) return;
-        try{
-            for (i = i; notearr[i].noteDate().compareTo(end)<=0; i++) ;
-        }catch(IndexOutOfBoundsException a){
-            i=notearr.length;
+        b = i;
+        if (i == notearr.length) return;
+        try {
+            for (i = i; notearr[i].noteDate().compareTo(end) <= 0; i++) ;
+        } catch (IndexOutOfBoundsException a) {
+            i = notearr.length;
         }
 
         e = i;
         notearr = Arrays.copyOfRange(notearr, b, e);
-        for (Note note : notearr) {
-            boolean x = keyWs.length==0;
-            for (String str : keyWs) {
-                x = note.noteTitle().contains(str)||str=="";
-            }
+        if (keyWs.length == 0)
+            for (Note note : notearr) printNote(note, dateFormat);
+        else {
+            for (Note note : notearr) {
+                for (String str : keyWs) {
+                    if (note.noteTitle().contains(str)) {
+                        printNote(note, dateFormat);
+                        continue;
+                    }
+                }
 
-            if (x)
-                printNote(note, dateFormat);
+            }
         }
 
     }
