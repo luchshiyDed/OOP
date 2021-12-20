@@ -90,7 +90,7 @@ public class MyTree<T> implements Iterable {
 
     void add(Integer key, T val, Integer parentKey) throws ArrayStoreException {
         if (!keys.contains(parentKey)) {
-            throw new ArrayStoreException("No such node");
+            throw new ArrayStoreException("No such parent node");
         }
         if (keys.contains(key)) {
             throw new ArrayStoreException("Keys must be unique for each value");
@@ -127,16 +127,6 @@ public class MyTree<T> implements Iterable {
             private boolean flag=false;
             private ArrayDeque<Node> q = new ArrayDeque<Node>();
             @Override
-            public String toString(){
-                return finder.toString();
-            }
-            public T getValue(){
-                return (T)finder.getValue();
-            }
-            public Integer getKey(){
-                return finder.getKey();
-            }
-            @Override
             public boolean hasNext() {
                 if(!flag){
                     q.add(root);
@@ -153,11 +143,6 @@ public class MyTree<T> implements Iterable {
                     q.addLast(itVar);
                }
                 return a;
-            }
-
-            @Override
-            public void remove() {
-                throw new ConcurrentModificationException();
             }
         };
         return it;

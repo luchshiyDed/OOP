@@ -1,8 +1,11 @@
 import notebook.Notebook;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class main {
     public static void main(String args[]) {
@@ -33,7 +36,6 @@ public class main {
                             a.printBook(dateFormat.parse(args[2]), dateFormat.parse(args[3]), str);
                         } catch (ParseException e) {
                             System.err.println("Invalid date formate please enter the date:yyyy-MM-dd kk:mm:ss");
-                            ;
                         }
                     }
                 }
@@ -44,6 +46,13 @@ public class main {
         } catch (IndexOutOfBoundsException e) {
             System.err.println("not enough arguments for " + args[1] + " " + e.getMessage());
         }
+        Scanner input = new Scanner(System.in);
+        ArrayList<String> arg=new ArrayList<String>();
+        while(input.hasNext()){
+            arg.add(input.next());
+        }
+        String[] x=new String[0];
+        arg.toArray(x);
+        main(x);
     }
-
 }
