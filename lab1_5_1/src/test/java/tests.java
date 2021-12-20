@@ -24,7 +24,7 @@ public class tests {
         assertArrayEquals(act,arr.toArray());
     }
     @Test
-    void removing_non_exicting_node(){
+    void removing_non_existing_node(){
         MyTree<Integer> a = new MyTree<Integer>();
         Exception e = assertThrows(Exception.class, () -> {a.remove(1);});
         assertEquals(e.getMessage(),"No such node");

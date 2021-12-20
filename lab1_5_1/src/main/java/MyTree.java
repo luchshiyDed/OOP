@@ -3,6 +3,10 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class MyTree<T> implements Iterable {
+    /**
+     * Node type for tree nodes includes Value and a Key. Key differs one node from others.
+     * @param <T>
+     */
     public class Node<T> {
         private T Value;
         private Integer key;
@@ -17,7 +21,11 @@ public class MyTree<T> implements Iterable {
         public void changeValue(T val) {
             Value = val;
         }
-        public ArrayList<Node> getChildren(){return children;}
+
+        public ArrayList<Node> getChildren() {
+            return children;
+        }
+
         public T getValue() {
             return Value;
         }
@@ -29,9 +37,10 @@ public class MyTree<T> implements Iterable {
         private void addChild(Node n) {
             children.add(n);
         }
+
         @Override
         public String toString() {
-            return "("+key.toString() + "," + Value.toString()+")";
+            return "(" + key.toString() + "," + Value.toString() + ")";
         }
 
         Boolean isLeaf() {
@@ -46,34 +55,53 @@ public class MyTree<T> implements Iterable {
     private Node root;
     private ArrayList<Integer> keys;
     private Node finder;
+
     MyTree() {
         root = null;
-        finder=null;
+        finder = null;
         keys = new ArrayList<Integer>();
     }
-    MyTree(int key,T val){
-        root=new Node(key,val);
+
+    /**
+     * Specifies the root.
+     * @param key root-node parameter that differs nodes with equal value.
+     * @param val value of the root-Node
+     */
+    MyTree(int key, T val) {
+        root = new Node(key, val);
         keys.add(key);
     }
+
     Node getRoot() {
         return root;
     }
+
+    /**
+     * Deletes a Node
+     * @param key - Node's key which yuo want to delete
+     * @return Deleted Node
+     */
     Node remove(Integer key) {
         if (!keys.contains(key)) {
             throw new ArrayStoreException("No such node");
         }
         Consumer<Node> act = (Node a) -> {
             ((Node) a).children.forEach(x -> {
-                    if(((Node) x).getKey() == key){
-                        finder=(Node)x;
-                    }
+                if (((Node) x).getKey() == key) {
+                    finder = (Node) x;
+                }
             });
-            ((Node) a).children.removeIf( b ->((Node) b).getKey() == key);
+            ((Node) a).children.removeIf(b -> ((Node) b).getKey() == key);
         };
         depthGo(act, root);
         return finder;
     }
 
+    /**
+     * adds a child to the root, if root is not specified creates the root.
+     * @param key unique identifier of a Node to differ  Nodes with same value
+     * @param val Value of the Node
+     */
     void add(Integer key, T val) {
         if (keys.contains(key)) {
             throw new ArrayStoreException("Keys must be unique for each value");
@@ -88,6 +116,13 @@ public class MyTree<T> implements Iterable {
 
     }
 
+    /**
+     * adds the Node as a child of the Node specified by the parentKey
+     * @param key unique identifier of a Node
+     * @param val value of the Node
+     * @param parentKey unique identifier of the Node which will be the parent of new Node
+     * @throws ArrayStoreException if there is no Node with key=parentKey or if there is already exist key.
+     */
     void add(Integer key, T val, Integer parentKey) throws ArrayStoreException {
         if (!keys.contains(parentKey)) {
             throw new ArrayStoreException("No such parent node");
@@ -108,6 +143,10 @@ public class MyTree<T> implements Iterable {
         depthGo(act, root);
     }
 
+    /**
+     * makes action for each element of the tree in DFS order from the root
+     * @param action
+     */
     public void depthGo(Consumer action) {
         Node a = root;
         if (a == null) {
@@ -124,13 +163,14 @@ public class MyTree<T> implements Iterable {
     @Override
     public Iterator<T> iterator() {
         Iterator<T> it = new Iterator() {
-            private boolean flag=false;
+            private boolean flag = false;
             private ArrayDeque<Node> q = new ArrayDeque<Node>();
+
             @Override
             public boolean hasNext() {
-                if(!flag){
+                if (!flag) {
                     q.add(root);
-                    flag=true;
+                    flag = true;
                 }
                 return !q.isEmpty();
             }
@@ -138,10 +178,10 @@ public class MyTree<T> implements Iterable {
             @Override
             public Node next() {
                 Node a = q.pollFirst();
-                ArrayList<Node> x=a.getChildren();
-               for(Node itVar:x){
+                ArrayList<Node> x = a.getChildren();
+                for (Node itVar : x) {
                     q.addLast(itVar);
-               }
+                }
                 return a;
             }
         };
