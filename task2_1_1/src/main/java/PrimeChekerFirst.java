@@ -1,29 +1,29 @@
-import java.util.ArrayList;
+import java.util.List;
 
 import static com.google.common.math.IntMath.isPrime;
 
-public class PrimeChekerFirst extends Thread{
-
-    private ArrayList<Integer> arr;
+public class PrimeChekerFirst{
+    private List<Integer> arr;
     private long time;
-    private boolean res=true;
-    PrimeChekerFirst(ArrayList<Integer> arr) {
+    private boolean res=false;
+    PrimeChekerFirst(List<Integer> arr) {
         this.arr = arr;
+        this.run();
     }
     long getTime(){return time;}
     boolean getRes(){return res;}
-    @Override
-    public void run() {
+    private void run() {
         long start = System.currentTimeMillis();
         for (Integer a : arr) {
             if (!isPrime(a.intValue())) {
                 long finish = System.currentTimeMillis();
                 time = finish - start;
-                res=false;
+                res= true;
             }
         }
         long finish = System.currentTimeMillis();
         time = finish - start;
+        res= false;
     }
 }
 
