@@ -16,14 +16,11 @@ public class PrimeChekerFirst{
         long start = System.currentTimeMillis();
         for (Integer a : arr) {
             if (!isPrime(a.intValue())) {
-                long finish = System.currentTimeMillis();
-                time = finish - start;
-                res= true;
+                res=true;
             }
         }
         long finish = System.currentTimeMillis();
         time = finish - start;
-        res= false;
     }
 }
 
