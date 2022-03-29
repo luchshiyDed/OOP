@@ -19,10 +19,10 @@ public class Main {
         }
         long min=res.stream().min(Long::compareTo).get();
         ParallelStream c=new ParallelStream(arr);
-
         Diag gr1=new Diag(new ArrayList<Long>(List.of(new Long[]{a.getTime(), min, c.getTime()})),new ArrayList<>(List.of(new String[]{"StepByStep","Threads","ParallelStream"})));
         gr1.setVisible(true);
         Diag gr = new Diag (res,new ArrayList<>(List.of(new String[]{"Threads"})) );
         gr.setVisible(true);
+        System.out.println(a.getTime());
     }
 }
