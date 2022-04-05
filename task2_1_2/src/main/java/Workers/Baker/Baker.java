@@ -1,12 +1,13 @@
 package Workers.Baker;
 
+import Pizzeria.PizzaQueue;
+import Pizzeria.Storage;
 import Workers.PizzeriaWorker;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Baker extends PizzeriaWorker {
-
+    private Storage storage;
+    private PizzaQueue pizzaQueue;
     private void cooking(){
         try {
             Thread.sleep(this.getTaskTime());
@@ -15,20 +16,28 @@ public class Baker extends PizzeriaWorker {
         }
 
     }
-    public Baker(String name, int WT, int TT){
-        this.setNam(name);
+    public Baker(BakerConf conf,Storage storage,PizzaQueue pizzaQueue,Integer WT){
         this.setWorkTime(WT);
-        this.setTaskTime(TT);
+        this.setTaskTime(conf.getTT());
+        this.setName(conf.getName());
+        this.storage=storage;
+        this.pizzaQueue=pizzaQueue;
     }
 
     @Override
-    public void workProcess() {
-
-        while(this.getWorkTime()>0)
-        {
+    protected void workProcess() {
+        Long current = System.currentTimeMillis()/1000;
+        while(System.currentTimeMillis()/1000-current<this.getWorkTime()|| !pizzaQueue.isEmpty()){
+            if(!pizzaQueue.isEmpty()){
+                pizzaQueue.lock();
+                String a=pizzaQueue.poll();
+                pizzaQueue.unlock();
+                cooking();
+                storage.lock();
+                storage.push(a);
+                storage.unlock();
+                System.out.println("Pizza " + a + " baked and placed in storage by: " + this.getName());
+            }
         }
-
     }
-
-
 }

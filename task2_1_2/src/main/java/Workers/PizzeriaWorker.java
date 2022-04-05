@@ -1,38 +1,16 @@
 package Workers;
 
-import java.util.Date;
-import java.util.concurrent.locks.Lock;
+import lombok.Data;
 
-public abstract class PizzeriaWorker extends Thread {
+import java.util.Date;
+
+@Data
+public abstract class PizzeriaWorker implements Runnable{
     private Integer workTime;
     private int taskTime;
     private String name;
-    /**
-     *  logic of working, exp: baker waits for a customer, bakes smth, gives it to a customer.
-     */
-   protected abstract void workProcess();
 
-    /**
-     *
-     * @return true - if Worker has no work to do
-     */
-
-    public String getNam(){
-        return this.name;
-    }
-    public int getWorkTime(){
-        return workTime;
-    }
-    public int getTaskTime(){
-        return taskTime;
-    }
-
-
-    public void setNam(String name){this.name=name;}
-    public void setWorkTime(int WT){
-        this.workTime=WT;
-    }
-    public void setTaskTime(int TT){this.taskTime=TT;}
+     protected abstract void workProcess();
 
     private void StartWorkMessage(){
         Date current = new Date();
@@ -43,17 +21,6 @@ public abstract class PizzeriaWorker extends Thread {
         Date current = new Date();
         System.out.println(this.getClass().toString() +" " + this.getName()+" "+"time:" + current + " "+ a);
     }
-    protected void rest(){
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
     private void EndWorkMessage(){
         Date current = new Date();
         System.out.println(this.getClass().toString() +" " + this.getName()+" "+"ended at:" + current);

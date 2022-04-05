@@ -1,23 +1,21 @@
 package JsonReader;
 
-import com.google.gson.Gson;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+import Pizzeria.PizzeriaConf;
+import Workers.Baker.BakerConf;
+import Workers.Cureer.CureerConf;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonReader {
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
-    JsonReader(String Bakers,String Cureers) {
-        Gson gson = new Gson();
-        Reader r = null;
-        Reader r1 = null;
-        try {
-            r = new FileReader(Bakers);
-            r1 = new FileReader(Cureers);
-        } catch (
-                FileNotFoundException e) {
-            e.printStackTrace();
-        }
+public class JsonReader{
+    public PizzeriaConf read(String bakers, String cureers) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        PizzeriaConf configuration=new PizzeriaConf();
+        configuration.BakerConf =  Arrays.asList(mapper.readValue(new File(bakers), BakerConf[].class));
+        configuration.CureerConf =  Arrays.asList(mapper.readValue(new File(cureers), CureerConf[].class));
+        return configuration;
     }
 }

@@ -2,12 +2,14 @@ package Pizzeria;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Storage {
-    private Lock storageLock;
-    private ArrayBlockingQueue<String> itemsInStorage;
+    private static Lock storageLock;
+    private static ArrayBlockingQueue<String> itemsInStorage;
     Storage(int cap){
         itemsInStorage=new ArrayBlockingQueue<>(cap);
+        storageLock=new ReentrantLock();
     }
     public void lock(){
         storageLock.lock();
@@ -15,10 +17,11 @@ public class Storage {
     public void unlock(){
         storageLock.unlock();
     }
-    public String pop(){
-        if(!itemsInStorage.isEmpty())
+    public boolean isEmpty(){
+        return itemsInStorage.isEmpty();
+    }
+    public String poll(){
             return itemsInStorage.poll();
-        else return "";
     }
     public void push(String val){
         itemsInStorage.add(val);
