@@ -1,0 +1,20 @@
+{
+  "wt": 200,
+  "stSize": 1,
+  "CureerConf": [
+    {
+      "name": "Sasha",
+      "tt": 10000
+    }
+  ],
+  "BakerConf": [
+    {
+      "name": "Olga2",
+      "tt": 4000
+    },
+    {
+      "name": "Olga3",
+      "tt": 5000
+    }
+  ]
+}

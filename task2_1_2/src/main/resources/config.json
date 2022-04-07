@@ -1,0 +1,40 @@
+{
+  "wt": 20,
+  "stSize": 40,
+  "CureerConf": [
+    {
+      "name": "Oleg",
+      "tt": 2000
+    },
+    {
+      "name": "Leha",
+      "tt": 3000
+    },
+    {
+      "name": "GovnaLepeha",
+      "tt": 4000
+    },
+    {
+      "name": "Sasha",
+      "tt": 10000
+    }
+  ],
+  "BakerConf": [
+    {
+      "name": "Olga",
+      "tt": 2000
+    },
+    {
+      "name": "Olga1",
+      "tt": 3000
+    },
+    {
+      "name": "Olga2",
+      "tt": 4000
+    },
+    {
+      "name": "Olga3",
+      "tt": 5000
+    }
+  ]
+}

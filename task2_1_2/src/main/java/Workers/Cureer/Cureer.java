@@ -1,11 +1,13 @@
 package Workers.Cureer;
 
+import Pizzeria.PizzaQueue;
 import Pizzeria.Storage;
 import Workers.PizzeriaWorker;
 
 public class Cureer extends PizzeriaWorker {
 
     private Storage storage;
+    private PizzaQueue pizzaQueue;
     private void working() {
         try {
             Thread.sleep(this.getTaskTime());
@@ -14,23 +16,28 @@ public class Cureer extends PizzeriaWorker {
         }
     }
 
-    public Cureer(CureerConf conf, Storage storage, Integer WT){
+    public Cureer(CureerConf conf, Storage storage,PizzaQueue pizzaQueue, Integer WT) {
         this.setWorkTime(WT);
         this.setTaskTime(conf.getTT());
         this.setName(conf.getName());
-        this.storage=storage;
+        this.storage = storage;
+        this.pizzaQueue=pizzaQueue;
     }
 
     @Override
     public void workProcess() {
-        Long current = System.currentTimeMillis()/1000;
-        while(System.currentTimeMillis()/1000-current<this.getWorkTime() || !storage.isEmpty()){
-            if(!storage.isEmpty()){
-                storage.lock();
-                String a=storage.poll();
-                storage.unlock();
-                working();
-                System.out.println("Pizza " + a+ " was delivered by: " + this.getName());
+        Long current = System.currentTimeMillis() / 1000;
+        while (System.currentTimeMillis() / 1000 - current < this.getWorkTime() || !pizzaQueue.isEmpty()) {
+            String a ="";
+            synchronized (storage) {
+                if (!storage.isEmpty()) {
+                     a = storage.poll();
+
+                }
+                if(!a.equals("")){
+                    working();
+                    System.out.println("Pizza " + a + " was delivered by: " + this.getName());
+                }
             }
         }
     }

@@ -14,24 +14,24 @@ public class Pizzeria extends Thread {
     private Storage storage;
     private PizzaQueue pizzaQueue;
     private  OrderCreater orderCreater;
-    public Pizzeria(String Bakers, String Cureers, Integer WT) {
+    public Pizzeria(String Bakers) {
         bakers=new ArrayList<>();
         cureers=new ArrayList<>();
-        conf=new PizzeriaConf();
         pizzaQueue=new PizzaQueue();
-        storage=new Storage(40);
+
         JsonReader js=new JsonReader();
         try {
-            conf=js.read(Bakers,Cureers);
+            conf=js.read(Bakers);
         } catch (IOException e) {
             e.printStackTrace();
         }
-       for (int i=0;i<conf.BakerConf.size();i++){
-           bakers.add(new Baker(conf.BakerConf.get(i),storage,pizzaQueue,WT));
+        storage=new Storage(conf.getStSize());
+       for (int i=0;i<conf.getBakerConf().size();i++){
+           bakers.add(new Baker(conf.getBakerConf().get(i),storage,pizzaQueue,conf.getWT()));
        }
-       for(int i=0;i<conf.CureerConf.size();i++)
-       {cureers.add(new Cureer(conf.CureerConf.get(i),storage,WT));}
-        orderCreater = new OrderCreater(pizzaQueue,WT);
+       for(int i=0;i<conf.getCureerConf().size();i++)
+       {cureers.add(new Cureer(conf.getCureerConf().get(i),storage,pizzaQueue,conf.getWT()));}
+        orderCreater = new OrderCreater(pizzaQueue,conf.getStSize());
     }
 
     @Override
@@ -45,11 +45,6 @@ public class Pizzeria extends Thread {
             a.start();
         }
         orderCreater.start();
-        try {
-            orderCreater.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
 
