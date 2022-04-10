@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class PizzaQueue {
     private static LinkedBlockingQueue<String> waitingOrders;
     private Integer orderNumber=0;
-    PizzaQueue(){
+    public PizzaQueue(){
         waitingOrders=new LinkedBlockingQueue<String>();
     }
     public boolean isEmpty(){

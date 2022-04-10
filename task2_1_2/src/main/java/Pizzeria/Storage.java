@@ -4,7 +4,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class Storage {
     private static ArrayBlockingQueue<String> itemsInStorage;
-    Storage(int cap){
+    public Storage(int cap){
         itemsInStorage=new ArrayBlockingQueue<>(cap);
     }
     public boolean isEmpty(){
