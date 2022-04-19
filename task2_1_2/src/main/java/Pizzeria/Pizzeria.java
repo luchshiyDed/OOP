@@ -14,14 +14,14 @@ public class Pizzeria extends Thread {
     private Storage storage;
     private PizzaQueue pizzaQueue;
     private  OrderCreater orderCreater;
-    public Pizzeria(String Bakers) {
+    public Pizzeria(String Config) {
         bakers=new ArrayList<>();
         cureers=new ArrayList<>();
         pizzaQueue=new PizzaQueue();
 
         JsonReader js=new JsonReader();
         try {
-            conf=js.read(Bakers);
+            conf=js.read(Config);
         } catch (IOException e) {
             e.printStackTrace();
         }

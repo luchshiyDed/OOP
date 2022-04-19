@@ -2,7 +2,7 @@ package Pizzeria;
 
 public class OrderCreater extends Thread {
     private PizzaQueue a;
-    private Integer WT;
+    private int WT;
     OrderCreater(PizzaQueue a,Integer WT){
         this.a=a;
         this.WT=WT;
@@ -11,17 +11,18 @@ public class OrderCreater extends Thread {
     public void run(){
         Long current = System.currentTimeMillis()/1000;
         while(System.currentTimeMillis()/1000-current<this.WT){
-            synchronized (a) {
+           synchronized (a) {
                 a.push("Mozzarala");
                 a.push("HoHo");
                 a.push("4 cheese");
             }
             System.out.println("3 pizzas added to queue");
             try {
-                Thread.sleep(5000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }

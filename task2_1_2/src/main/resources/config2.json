@@ -4,7 +4,8 @@
   "CureerConf": [
     {
       "name": "Sasha",
-      "tt": 10000
+      "tt": 10000,
+      "bp": 2
     }
   ],
   "BakerConf": [

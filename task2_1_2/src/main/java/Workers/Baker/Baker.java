@@ -1,5 +1,6 @@
 package Workers.Baker;
 
+import Pizzeria.Order;
 import Pizzeria.PizzaQueue;
 import Pizzeria.Storage;
 import Workers.PizzeriaWorker;
@@ -30,31 +31,34 @@ public class Baker extends PizzeriaWorker {
     protected void workProcess() {
         Long current = System.currentTimeMillis() / 1000;
         while (System.currentTimeMillis() / 1000 - current < this.getWorkTime() || !pizzaQueue.isEmpty()) {
-            String a = "";
+            Order a = null;
+            Boolean flg = false;
             synchronized (
                     pizzaQueue
             ) {
                 if (!pizzaQueue.isEmpty()) {
                     a = pizzaQueue.poll();
                     cooking();
+                    flg = true;
                 }
             }
-            if (!a.equals("")) {
+            if (flg) {
                 boolean f = true;
                 while (f) {
                     synchronized (storage) {
-                        f= storage.isFull();
+                        f = storage.isFull();
                         if (!f) {
                             storage.push(a);
-                            System.out.println("Pizza " + a + " baked and placed in storage by: " + this.getName());
+                            System.out.println("Pizza " + a.getOrderWithName() + " baked and placed in storage by: " + this.getName());
+                        } else {
+                            System.out.println("Pizza " + a.getOrderWithName() + " baked but storage is full " + this.getName() + " waits to place it");
                         }
-                        else{
-                            try {
-                                System.out.println("Pizza " + a + " baked but storage is full " +this.getName() + " waits to place it");
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                    }
+                    if (f) {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
                 }

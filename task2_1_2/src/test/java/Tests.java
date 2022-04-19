@@ -1,18 +1,23 @@
+import JsonReader.JsonReader;
+import Pizzeria.Order;
 import Pizzeria.PizzaQueue;
+import Pizzeria.PizzeriaConf;
 import Pizzeria.Storage;
 import Workers.Baker.Baker;
-import Workers.Baker.BakerConf;
 import Workers.Cureer.Cureer;
-import Workers.Cureer.CureerConf;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
 public class Tests {
     @Test
-    public void bakerTest() throws InterruptedException {
+    public void bakerTest() throws InterruptedException, IOException {
         Integer WT=1;
         PizzaQueue pq=new PizzaQueue();
         Storage storage=new Storage(3);
-        BakerConf bc=new BakerConf(1000,"a");
-        Baker b =new Baker(bc,storage,pq,WT);
+        JsonReader js=new JsonReader();
+        PizzeriaConf PC=js.read("src/test/resources/tstconf.json");
+        Baker b =new Baker(PC.getBakerConf().get(0),storage,pq,WT);
         Thread a = new Thread(b);
         pq.push("Pizza");
         a.start();
@@ -21,18 +26,20 @@ public class Tests {
         {assert(pq.isEmpty());}
         synchronized (storage)
         {assert(!storage.isEmpty());}
-        String str=storage.poll();
-        assert(str.equals("Pizza #0"));
+        Order str=storage.poll();
+        Order res=new Order(0,"Pizza");
+        assert(str.equals(res));
     }
     @Test
-    public void cureerTest() throws InterruptedException {
+    public void cureerTest() throws InterruptedException, IOException {
         Integer WT=1;
         Storage storage=new Storage(3);
         PizzaQueue pq=new PizzaQueue();
-        CureerConf bc=new CureerConf(1000,"a");
-        Cureer b =new Cureer(bc,storage,pq,WT);
+        JsonReader js=new JsonReader();
+        PizzeriaConf PC=js.read("src/test/resources/tst2conf.json");
+        Cureer b =new Cureer(PC.getCureerConf().get(0),storage,pq,WT);
         Thread a = new Thread(b);
-        storage.push("Pizza");
+        storage.push(new Order(0,"Pizza"));
         a.start();
         a.join();
         synchronized (storage)
